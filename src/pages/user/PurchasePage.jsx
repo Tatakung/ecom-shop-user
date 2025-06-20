@@ -1,12 +1,13 @@
-import React from "react";
-import HistoryUser from "../../components/user/HistoryUser";
+import React from 'react'
+import HistoryUser from '../../components/user/HistoryUser'
 
 const PurchasePage = () => {
   return (
     <div>
-      <HistoryUser />
+      {/*  */}
+      <HistoryUser/>
     </div>
-  );
-};
+  )
+}
 
-export default PurchasePage;
+export default PurchasePage
