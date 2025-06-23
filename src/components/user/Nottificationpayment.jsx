@@ -16,15 +16,14 @@ const Nottificationpayment = () => {
 
   const hours = Array.from({ length: 24 }, (_, i) => i); // อาร์เรย์ชั่วโมง 0-23
   const minutes = Array.from({ length: 60 }, (_, i) => i); // อาร์เรย์นาที 0-59
-
   const [date, setDate] = useState("");
   const [hor, setHor] = useState("");
   const [minute, setMinute] = useState("");
   const { id } = useParams();
   const [cart, setCart] = useState([]); // สถานะนี้จะเก็บยอดรวมตะกร้า ตาม Logic เดิมของคุณ
-
   // ดึงชื่อผู้ใช้จาก global state เพื่อนำมาแสดง (ตัวอย่าง ถ้ามีใน store)
   const userName = useMyStore((state) => state.user?.name || "ไม่ระบุ");
+  const [addingToCart, setAddingToCart] = useState(false);
 
   // ฟังก์ชันดึงข้อมูลตะกร้าสินค้า
   const getcart = async (token, id) => {
@@ -60,6 +59,7 @@ const Nottificationpayment = () => {
       return;
     }
 
+    setAddingToCart(true);
     try {
       const data = {
         date,
@@ -78,6 +78,8 @@ const Nottificationpayment = () => {
       toast.error(
         error.response?.data?.message || "เกิดข้อผิดพลาดในการแจ้งชำระเงิน"
       ); // ปรับปรุงข้อความ error toast
+    } finally {
+      setAddingToCart(false); // หยุดหยิบใส่ตะกร้า
     }
   };
 
@@ -173,9 +175,9 @@ const Nottificationpayment = () => {
               <li>
                 ถ้าหากทำรายการโอนเงินหลังจากการโอนแล้วให้ลูกค้าแจ้งชำระเงิน
               </li>
-              <li>
+              {/* <li>
                 กรุณากรอกรายละเอียดให้ถูกต้องสมบูรณ์ ทั้งวันที่ และ จำนวนเงิน
-              </li>
+              </li> */}
               <li>
                 หลังจากแจ้งชำระเงินเรียบร้อย
                 ทางเจ้าหน้าที่จะทำการยืนยันการสั่งซื้อ
@@ -289,6 +291,8 @@ const Nottificationpayment = () => {
             <button
               className="btn btn-dark btn-sm w-100"
               onClick={handleSubmit}
+                disabled={addingToCart}
+
               style={{
                 backgroundColor: "#A53860",
                 color: "#FFFFFF",
@@ -299,7 +303,21 @@ const Nottificationpayment = () => {
                 transition: "all 0.2s ease-in-out",
               }}
             >
-              ยืนยันการแจ้งชำระเงิน
+              {addingToCart ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                    style={{ color: "#FFFFFF" }} // สี Spinner เป็นสีขาว
+                  ></span>
+                  กำลังทำรายการ...
+                </>
+              ) : (
+                <>
+                  ยืนยันการแจ้งชำระเงินที่นี่
+                </>
+              )}
             </button>
           </div>
         </div>

@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import useMyStore from "../../global-state/bigdata";
 import { listCartApi, submitCartApi } from "../../api/cartApi";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate, Link } from "react-router-dom"; // เพิ่ม Link เพื่อกลับตะกร้า
-import "react-toastify/dist/ReactToastify.css"; // Ensure Toastify CSS is imported
+import { useNavigate, Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 const ConfirmOrder = () => {
   const token = useMyStore((state) => state.token);
   const [cart, setCart] = useState(null); // ใช้ null เพื่อจัดการ loading/empty state
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-  const [loading, setLoading] = useState(true); // เพิ่ม loading state
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [addingToCart, setAddingToCart] = useState(false);
 
-  // Helper for price formatting
+  const navigate = useNavigate();
   const formatPrice = (price) => {
     return price
       ? price.toLocaleString("th-TH", {
@@ -33,7 +33,7 @@ const ConfirmOrder = () => {
     } catch (error) {
       console.error("Error fetching cart for confirmation:", error);
       toast.error("ไม่สามารถโหลดข้อมูลตะกร้าสินค้าได้");
-      setCart(null); // Clear cart on error
+      setCart(null);
     } finally {
       setLoading(false);
     }
@@ -56,6 +56,8 @@ const ConfirmOrder = () => {
       toast.error("ไม่มีสินค้าในตะกร้า ไม่สามารถยืนยันคำสั่งซื้อได้");
       return;
     }
+
+    setAddingToCart(true);
 
     try {
       const data = {
@@ -86,6 +88,8 @@ const ConfirmOrder = () => {
           )}
         </div>
       );
+    } finally {
+      setAddingToCart(false);
     }
   };
 
@@ -269,7 +273,7 @@ const ConfirmOrder = () => {
             </h5>
             <p className="text-muted">
               *** ชำระเงิน *** <br />
-              (หลังจากโอนเงินแล้ว แจ้งกับระบบ)
+              (หลังจากโอนเงินแล้ว ให้แจ้งชำระเงินกับระบบ)
             </p>
           </div>
           <div className="col-md-6 col-12 text-md-end text-start">
@@ -301,6 +305,7 @@ const ConfirmOrder = () => {
             <button
               className="btn btn-dark btn-lg w-100" // w-100 เพื่อให้ปุ่มเต็มความกว้าง
               onClick={handleConfirmOrder}
+              disabled={addingToCart}
               style={{
                 backgroundColor: "#A53860",
                 color: "#FFFFFF",
@@ -311,7 +316,19 @@ const ConfirmOrder = () => {
                 transition: "all 0.2s ease-in-out",
               }}
             >
-              ยืนยันการสั่งซื้อสินค้า
+              {addingToCart ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                    style={{ color: "#FFFFFF" }} // สี Spinner เป็นสีขาว
+                  ></span>
+                  กำลังทำรายการ...
+                </>
+              ) : (
+                <>ยืนยันการสั่งซื้อ</>
+              )}
             </button>
           </div>
         </div>

@@ -21,7 +21,7 @@ const ProductsDetail = () => {
   const [count, setCount] = useState(1);
   const [loading, setLoading] = useState(true); // เพิ่ม state สำหรับ loading
   const navigate = useNavigate();
-  const [addingToCart, setAddingToCart] = useState(false); // เพิ่ม state สำหรับ addingToCart
+  const [addingToCart, setAddingToCart] = useState(false); 
 
   useEffect(() => {
     // โค้ดเดิมที่คุณต้องการคงไว้
@@ -80,7 +80,7 @@ const ProductsDetail = () => {
       return;
     }
 
-    setAddingToCart(true); // เริ่มหยิบใส่ตะกร้า
+    setAddingToCart(true); 
     try {
       const data = {
         product_id: id,

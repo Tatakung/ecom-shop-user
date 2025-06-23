@@ -7,33 +7,32 @@ import {
   removeitemCartApi,
 } from "../../api/cartApi";
 import useMyStore from "../../global-state/bigdata";
-import { ToastContainer, toast } from "react-toastify"; // Added Toastify for notifications
-import { CircleMinus, CirclePlus, Trash2, ShoppingCart } from "lucide-react"; // Added relevant icons
-import "react-toastify/dist/ReactToastify.css"; // Toastify CSS
-
+import { ToastContainer, toast } from "react-toastify"; 
+import { CircleMinus, CirclePlus, Trash2, ShoppingCart } from "lucide-react"; 
+import "react-toastify/dist/ReactToastify.css";
 const Cart = () => {
   const token = useMyStore((state) => state.token);
-  const [cart, setCart] = useState(null); // Changed to null initially to indicate no data yet
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [cart, setCart] = useState(null); 
+  const [loading, setLoading] = useState(true); 
 
   // Function to fetch cart data
   const getCart = async () => {
-    setLoading(true); // Set loading to true before fetching
+    setLoading(true); 
     try {
       const res = await listCartApi(token);
       setCart(res.data);
     } catch (error) {
-      setCart(null); // Clear cart on error
+      setCart(null); 
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false); 
     }
   };
 
   useEffect(() => {
     getCart();
-  }, [token]); // Added token to dependency array for re-fetch on token change
+  }, [token]); 
 
-  // Function to add quantity of an item
+
   const add = async (item_id, product_id, cart_id) => {
     try {
       await AddCountedCartApi(token, { item_id, product_id, cart_id });
@@ -44,47 +43,60 @@ const Cart = () => {
     }
   };
 
-  // Function to remove quantity of an item
   const remove = async (item_id) => {
     try {
       await removeCountedCartApi(token, { item_id });
-      getCart(); // Re-fetch cart to update UI
+      getCart(); 
     } catch (error) {
       console.error("Error removing item quantity:", error);
       toast.error(error.response?.data?.message || "ไม่สามารถลดจำนวนสินค้าได้");
     }
   };
 
-  // Function to remove an item from the cart
   const removeItemed = async (item_id, cart_id) => {
     try {
       await removeitemCartApi(token, { item_id, cart_id });
-      toast.success("ลบสินค้าออกจากตะกร้าเรียบร้อยแล้ว"); // Success notification
-      getCart(); // Re-fetch cart to update UI
+      toast.success("ลบสินค้าออกจากตะกร้าเรียบร้อยแล้ว");
+      getCart();
     } catch (error) {
       console.error("Error removing item from cart:", error);
       toast.error(error.response?.data?.message || "ไม่สามารถลบสินค้าออกจากตะกร้าได้");
     }
   };
 
-  // Helper for price formatting
   const formatPrice = (price) => {
     return price
       ? price.toLocaleString("th-TH", {
           minimumFractionDigits: 0,
           maximumFractionDigits: 0,
         })
-      : "0"; // Default to "0" if price is not available
+      : "0"; 
   };
 
   return (
     <div className="min-vh-100 py-4" style={{ backgroundColor: "#FFFFFF" }}>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+      {
+        loading ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "300px" }}
+          >
+            <div
+              className="spinner-border"
+              role="status"
+              style={{ color: "#333333" }}
+            >
+              {" "}
+              {/* สี Spinner เทาเข้ม */}
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            <p className="ms-3 text-muted">กำลังโหลดรายละเอียดสินค้า...</p>
+          </div>
+        ) : <> <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
       <div className="container">
         <h3 className="text-center mb-4 fw-bold" style={{ color: "#333333" }}>
           รายการสินค้าในตะกร้า
         </h3>
-        
         { !cart || !cart.products || cart.products.length === 0 ? (
           <div className="text-center py-5 bg-light rounded" style={{backgroundColor: "#f2f2f2"}}>
             <ShoppingCart size={60} className="mb-3" style={{ color: "#999999" }} />
@@ -151,8 +163,8 @@ const Cart = () => {
                       <button
                         type="button"
                         className="btn btn-sm"
-                        onClick={() => add(element.id, element.product.id, element.cartId)} // Use element.product.id
-                        disabled={element.count >= element.product?.quantity} // Disable if count equals stock
+                        onClick={() => add(element.id, element.product.id, element.cartId)} 
+                        disabled={element.count >= element.product?.quantity} 
                         style={{
                           backgroundColor: "transparent",
                           color: "#333333",
@@ -170,7 +182,6 @@ const Cart = () => {
                     </span>
                   </p>
                 </div>
-                {/* Total Price for item and Remove Button */}
                 <div className="col-md-3 col-12 text-md-end text-start">
                   <p className="fs-5 fw-bold mb-2" style={{ color: "#333333" }}>
                     รวม: {formatPrice(element.count * element.price)} บาท
@@ -180,7 +191,7 @@ const Cart = () => {
                     className="btn btn-danger btn-sm"
                     onClick={() => removeItemed(element.id, element.cartId)}
                     style={{
-                      backgroundColor: "#dc3545", // Bootstrap's default danger color
+                      backgroundColor: "#dc3545", 
                       color: "#FFFFFF",
                       border: "none",
                       borderRadius: "5px",
@@ -219,7 +230,9 @@ const Cart = () => {
             </div>
           </>
         )}
-      </div>
+      </div></>
+      }
+     
     </div>
   );
 };

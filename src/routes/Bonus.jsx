@@ -16,7 +16,7 @@ const Bonus = () => {
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
       <div className="text-center">
         <p className="fs-4 fw-bold text-secondary">
-          กำลังทำรายการอยู่ กรุณารอสักครู่นะ!
+          กำลังโหลด กรุณารอสักครู่!
         </p>
       </div>
     </div>

@@ -46,6 +46,24 @@ const Register = () => {
         setLoading(false);
         return;
       }
+      if (!password || !confirmpassword) {
+        toast.error("กรุณากรอกรหัสผ่านและยืนยันรหัสผ่าน");
+        setLoading(false);
+        return;
+      }
+
+      if (password.length < 8 || confirmpassword.length < 8) {
+        toast.error("รหัสผ่านและยืนยันรหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร");
+        setLoading(false);
+        return;
+      }
+
+      if (password !== confirmpassword) {
+        toast.error("รหัสผ่านไม่ตรงกัน");
+        setLoading(false);
+        return;
+      }
+
       if (password !== confirmpassword) {
         toast.error("รหัสผ่านไม่ตรงกัน");
         setLoading(false);
