@@ -1,12 +1,22 @@
-# React + Vite
+## 📂 รายละเอียด  
+### 3. ระบบร้านค้าออนไลน์ e-commerce (สำหรับร้านชุด)   ส่วน fontend
+- 📄 **รายละเอียด:**  
+  ระบบขายชุดออนไลน์ มีระบบตะกร้า แจ้งชำระเงิน และแดชบอร์ดสำหรับ Admin ใช้ JWT สำหรับยืนยันตัวตน
+- 🧰 **เทคโนโลยีที่ใช้:**  
+  - Frontend: React.js + Bootstrap  
+  - Backend: Node.js + Express  
+  - Database: MySQL (Prisma ORM)  
+  - Hosting: Vercel (Frontend + Backend) + Supabase (MySQL) +Cloudinary(รูปภาพ)
+- 🧩 **ฟีเจอร์หลัก:**  
+  - แสดงสินค้า / เพิ่มสินค้า / ตัวกรองสินค้า / ซื้อชุด / ระบบตะกร้าสินค้า  
+  - แบบฟอร์มแจ้งชำระเงิน
+  - Dashboard ผู้ดูแลระบบพร้อมกราฟ  
+  - ระบบ Login/Register พร้อม JWT Auth
+  - 
+- 🌐 **เยี่ยมชมเว็บไซต์ตอนนี้:** [https://ecom-shop-user.vercel.app/](https://ecom-shop-user.vercel.app/)
+- 🌐 **github fontend:** [https://github.com/Tatakung/ecom-shop-user/tree/main](https://github.com/Tatakung/ecom-shop-user/tree/main)
+- 🌐 **github backend:** [https://github.com/Tatakung/ecom-shop-api/tree/main](https://github.com/Tatakung/ecom-shop-api/tree/main)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
