@@ -18,11 +18,3 @@
 
 ---
 
-## 🛠️ ทักษะที่ใช้
-
-- Laravel / PHP / Eloquent ORM  
-- React / Node.js / Express  
-- MySQL / Prisma ORM / Supabase  
-- HTML / CSS / Bootstrap / JavaScript  
-- Git / GitHub / Vercel / Postman  
-
