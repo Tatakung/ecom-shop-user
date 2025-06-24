@@ -36,14 +36,28 @@ const Listproductdetail = () => {
     try {
       const res = await editProductdedtail(token, data, id);
       getProduct(token, id);
-      
-     
+
       toast.success(res.data.message);
     } catch (error) {
       console.log(error);
     }
   };
-  if (!product) return <div>Loading...</div>; // ยังโหลดไม่เสร็จ
+  if (!product)
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ minHeight: "300px" }}
+      >
+        <div
+          className="spinner-border"
+          role="status"
+          style={{ color: "#333333" }}
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p className="ms-3 text-muted">กำลังโหลดรายละเอียด...</p>
+      </div>
+    ); 
   return (
     <div>
       <ToastContainer />
@@ -51,7 +65,7 @@ const Listproductdetail = () => {
         mode="edit"
         token={token}
         onSubmit={handleupdate}
-        initialData={product} // 
+        initialData={product} //
         category={category}
         getCategory={getCategory}
       />

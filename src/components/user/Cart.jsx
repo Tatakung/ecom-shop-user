@@ -36,7 +36,7 @@ const Cart = () => {
   const add = async (item_id, product_id, cart_id) => {
     try {
       await AddCountedCartApi(token, { item_id, product_id, cart_id });
-      getCart(); // Re-fetch cart to update UI
+      getCart(); 
     } catch (error) {
       console.error("Error adding item quantity:", error);
       toast.error(error.response?.data?.message || "ไม่สามารถเพิ่มจำนวนสินค้าได้");
@@ -114,7 +114,7 @@ const Cart = () => {
                 className="row g-3 py-3 mb-3 align-items-center rounded shadow-sm"
                 style={{ backgroundColor: "#FFFFFF", border: "1px solid #e0e0e0" }}
               >
-                {/* Product Image */}
+                
                 <div className="col-md-2 col-4">
                   <img
                     src={element.product?.images?.[0]?.url || "https://via.placeholder.com/100x100?text=No+Image"}
@@ -123,7 +123,7 @@ const Cart = () => {
                     style={{ maxHeight: "100px", objectFit: "cover" }}
                   />
                 </div>
-                {/* Product Info & Quantity */}
+                
                 <div className="col-md-7 col-8">
                   <h5 className="mb-1 fw-semibold" style={{ color: "#333333" }}>
                     {element.product?.title || "สินค้าไม่มีชื่อ"}
@@ -151,7 +151,7 @@ const Cart = () => {
                       <span
                         className="px-3 d-flex align-items-center justify-content-center fw-bold"
                         style={{
-                          backgroundColor: "#f2f2f2", // Use f2f2f2 for quantity background
+                          backgroundColor: "#f2f2f2", 
                           color: "#333333",
                           borderTop: "1px solid #e0e0e0",
                           borderBottom: "1px solid #e0e0e0",
@@ -203,7 +203,7 @@ const Cart = () => {
                 </div>
               </div>
             ))}
-            {/* Cart Summary */}
+            
             <div className="row justify-content-end mt-4">
               <div className="col-md-4 col-12">
                 <div className="p-3 rounded shadow-sm" style={{ backgroundColor: "#f2f2f2", border: "1px solid #e0e0e0" }}>

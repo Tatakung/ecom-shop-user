@@ -71,8 +71,6 @@ const ProductTotalpage = () => {
             role="status"
             style={{ color: "#333333" }}
           >
-            {" "}
-            {/* สี Spinner เทาเข้ม */}
             <span className="visually-hidden">Loading...</span>
           </div>
           <p className="ms-3 text-muted">กำลังโหลดรายละเอียดสินค้า...</p>

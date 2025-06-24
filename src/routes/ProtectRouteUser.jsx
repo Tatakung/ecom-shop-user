@@ -11,7 +11,7 @@ const ProtectRouteUser = ({ element }) => {
   const token = useMyStore((state) => state.token);
   useEffect(() => {
     if (user && token) {
-      // send to back
+      
       currentUser(token)
         .then((res) => setOk(true))
         .catch((err) => setOk(false));

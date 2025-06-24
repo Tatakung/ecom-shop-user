@@ -18,7 +18,6 @@ export const removeimage = async (token, public_id, productId = null) => {
   );
 };
 export const createProduct = async (token, data) => {
-  console.log("dataที่รับมาคือ", data);
   return await axios.post("https://ecom-shop-api-ten.vercel.app/api/product", data, {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -17,8 +17,6 @@ const ProductForm = ({
   const [price, setPrice] = useState(initialData.price || "");
   const [stock, setStock] = useState(initialData.quantity || "");
 
-  // console.log("ค่า descriptionใหม่และ rerender", description);
-  // ฟังชั่นสำหรีบเซตค่าstateให้เป็ฯ ค่าว่าง หลังจากที่มีการบันทึกข้อมูล
   const resetvalue = () => {
     setImages("");
     setType("");
@@ -28,7 +26,6 @@ const ProductForm = ({
     setStock("");
     setImages([]);
   };
-  // ProductForm.jsx
   useEffect(() => {
     setImages(initialData.images || []);
     setType(initialData.categoryId || "");

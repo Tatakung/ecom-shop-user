@@ -10,32 +10,30 @@ const StatusHistoryUserDetail = ({ cart, getcart, token, id }) => {
     try {
       const data = {
         order_id: id,
-        numberCode: "", // ตรวจสอบว่า field นี้ยังจำเป็นหรือไม่
+        numberCode: "", 
       };
       const res = await updateStatusApi(token, data);
       toast.success(res.data.message);
       getcart(token, id);
     } catch (error) {
-      console.error("Error confirming status:", error); // ใช้ console.error เพื่อการ debug ที่ดีขึ้น
-      toast.error("เกิดข้อผิดพลาดในการยืนยันสถานะ"); // แจ้งเตือนผู้ใช้หากมีข้อผิดพลาด
+      console.error("Error confirming status:", error); 
+      toast.error("เกิดข้อผิดพลาดในการยืนยันสถานะ");
     }
   };
 
   const colors = {
-    primaryBg: "#f8f9fa", // ใช้สีเทาอ่อนของ Bootstrap (light)
+    primaryBg: "#f8f9fa", 
     white: "#FFFFFF",
-    lightGrayBorder: "#dee2e6", // ใช้สี border ของ Bootstrap
-    darkGray: "#A53860", // สีชมพูเข้มตามที่คุณต้องการ
-    mediumGray: "#6c757d", // ใช้สี text-secondary ของ Bootstrap
-    textDark: "#212529", // สี text-dark ของ Bootstrap
+    lightGrayBorder: "#dee2e6",
+    darkGray: "#A53860",
+    mediumGray: "#6c757d", 
+    textDark: "#212529", 
   };
 
-  // Timeline styles - ใช้ Bootstrap classes เท่าที่ทำได้ และเสริมด้วย inline styles สำหรับโครงสร้างเฉพาะ
-  // กำหนด CSS variables ในระดับที่ใหญ่ขึ้น หรือใช้ Scss variables จะดีกว่าหากมีไฟล์ CSS ของตัวเอง
   const timelineStyles = {
     position: "relative",
-    paddingLeft: "20px", // สำหรับเส้นแนวตั้ง
-    maxWidth: "400px", // จำกัดความกว้างของ timeline เพื่อความสวยงาม
+    paddingLeft: "20px", 
+    maxWidth: "400px", 
   };
 
   const timelineBeforeStyles = {
@@ -51,7 +49,7 @@ const StatusHistoryUserDetail = ({ cart, getcart, token, id }) => {
   const timelineItemBeforeStyles = {
     content: "''",
     position: "absolute",
-    left: "-8px", // ปรับตำแหน่งจุดวงกลม
+    left: "-8px", 
     top: "2px",
     width: "14px",
     height: "14px",
@@ -62,7 +60,7 @@ const StatusHistoryUserDetail = ({ cart, getcart, token, id }) => {
   };
 
   return (
-    <div className="bg-light py-4"> {/* ใช้ bg-light สำหรับพื้นหลังหลัก, min-vh-100 ให้เต็มจอ */}
+    <div className="bg-light py-4"> 
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -80,18 +78,18 @@ const StatusHistoryUserDetail = ({ cart, getcart, token, id }) => {
           รายละเอียดคำสั่งซื้อ
         </h3>
 
-        <div className="card shadow-sm mb-4 border-0"> {/* เพิ่ม shadow-sm และ border-0 */}
+        <div className="card shadow-sm mb-4 border-0"> 
           <div
-            className="card-header fw-bold text-white py-3" // py-3 เพื่อให้มี padding ที่เหมาะสม
+            className="card-header fw-bold text-white py-3" 
             style={{ backgroundColor: colors.darkGray }}
           >
             ข้อมูลการจัดส่งและสถานะ
           </div>
           <div className="card-body">
-            <div className="row g-3 p-2"> {/* ใช้ g-3 สำหรับ gap ระหว่าง col */}
+            <div className="row g-3 p-2"> 
               <div className="col-lg-5 col-md-12 mb-3 mb-lg-0">
                 <h5 className="fw-bold text-dark mb-3">ที่อยู่ในการจัดส่ง</h5>
-                <p className="mb-1 text-muted"> {/* ใช้ text-muted สำหรับข้อความรอง */}
+                <p className="mb-1 text-muted"> 
                   <span className="fw-semibold text-dark">ชื่อ:</span>{" "}
                   {cart.orderedBy?.name || "ไม่ระบุ"}
                 </p>
@@ -108,7 +106,7 @@ const StatusHistoryUserDetail = ({ cart, getcart, token, id }) => {
                     <span className="fw-semibold text-dark">
                       ประวัติแจ้งชำระเงิน:
                     </span>
-                    <br /> {/* ขึ้นบรรทัดใหม่เพื่อให้อ่านง่ายขึ้น */}
+                    <br /> 
                     <span>
                       วันที่ทำรายการ:{" "}
                       {cart.order_o_m_slip[0].date
@@ -150,10 +148,10 @@ const StatusHistoryUserDetail = ({ cart, getcart, token, id }) => {
                   </h5>
                   {cart?.order_o_m_status &&
                   cart.order_o_m_status.length > 0 ? (
-                    <div style={timelineStyles} className="ms-3 ms-md-0"> {/* เพิ่ม ms-3 บนมือถือ */}
+                    <div style={timelineStyles} className="ms-3 ms-md-0"> 
                       <div style={timelineBeforeStyles}></div>
                       {cart.order_o_m_status.map((e, index) => (
-                        <div className="mb-4 position-relative" key={index}> {/* ใช้ Bootstrap mb-4 */}
+                        <div className="mb-4 position-relative" key={index}> 
                           <div style={timelineItemBeforeStyles}></div>{" "}
                           <p className="text-muted mb-1" style={{ fontSize: "0.85em" }}>
                             {e.createdAt
@@ -179,7 +177,7 @@ const StatusHistoryUserDetail = ({ cart, getcart, token, id }) => {
                 {user.role === "user" &&
                 cart.orderStatus === "จัดส่งพัสดุแล้ว" && (
                   <button
-                    className="btn btn-sm text-white mt-3" // ใช้ mt-3 สำหรับ margin-top
+                    className="btn btn-sm text-white mt-3" 
                     style={{ backgroundColor: colors.darkGray }}
                     data-bs-toggle="modal"
                     data-bs-target="#modalChoice"
@@ -204,10 +202,10 @@ const StatusHistoryUserDetail = ({ cart, getcart, token, id }) => {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content rounded-3 shadow">
             <div className="modal-body p-4 text-center">
-              <h5 className="mb-2 text-dark">คุณได้รับสินค้าแล้วใช่ไหม?</h5> {/* mb-2 แทน mb-0 */}
+              <h5 className="mb-2 text-dark">คุณได้รับสินค้าแล้วใช่ไหม?</h5> 
               <p className="mb-0 text-muted">โปรดยืนยันเพื่ออัปเดตสถานะคำสั่งซื้อ</p>
             </div>
-            <div className="modal-footer flex-nowrap p-0 border-top"> {/* เพิ่ม border-top */}
+            <div className="modal-footer flex-nowrap p-0 border-top"> 
               <button
                 type="button"
                 className="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end text-success fw-bold" // เพิ่ม text-success และ fw-bold

@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import { historyCartApi, historyqueryCartApie } from "../../api/userApi";
 import useMyStore from "../../global-state/bigdata";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify"; // เพิ่ม Toastify สำหรับการแจ้งเตือน
-import { History, ShoppingBag } from "lucide-react"; // เพิ่มไอคอนที่เกี่ยวข้อง
-import "react-toastify/dist/ReactToastify.css"; // CSS ของ Toastify
+import { ToastContainer, toast } from "react-toastify"; 
+import { History, ShoppingBag } from "lucide-react"; 
+import "react-toastify/dist/ReactToastify.css"; 
 
 const HistoryUser = () => {
   const token = useMyStore((state) => state.token);
-  const [history, setHistory] = useState(null); // เปลี่ยนเป็น null เพื่อจัดการสถานะโหลดและไม่มีข้อมูล
-  const [loading, setLoading] = useState(true); // เพิ่ม loading state
+  const [history, setHistory] = useState(null); 
+  const [loading, setLoading] = useState(true); 
 
-  // Helper สำหรับจัดรูปแบบราคา
   const formatPrice = (price) => {
     return price
       ? price.toLocaleString("th-TH", {
@@ -44,7 +43,7 @@ const HistoryUser = () => {
       toast.error("ไม่สามารถโหลดประวัติการสั่งซื้อได้");
       setHistory(null);
     } finally {
-      setLoading(false); // โหลดเสร็จสิ้น
+      setLoading(false); 
     }
   };
   useEffect(() => {
@@ -56,7 +55,7 @@ const HistoryUser = () => {
     setHistory(q.data);
   };
 
-  // แสดงผล Spinner ขณะโหลดข้อมูล
+  
   if (loading) {
     return (
       <div
@@ -107,15 +106,15 @@ const HistoryUser = () => {
           history?.map((element) => (
             <Link
               to={"/user/purchase/detail/" + element.id}
-              className="d-block mb-4 p-3 rounded shadow-sm" // d-block ทำให้ Link เป็น block element, p-3 สำหรับ padding
+              className="d-block mb-4 p-3 rounded shadow-sm" 
               style={{
                 textDecoration: "none",
                 backgroundColor: "#FFFFFF",
                 border: "1px solid #e0e0e0",
               }}
-              key={element.id} // ใช้ element.id เป็น key แทน index
+              key={element.id} 
             >
-              {/* ส่วนหัวของออเดอร์ */}
+              
               <div
                 className="row align-items-center mb-2 pb-2"
                 style={{ borderBottom: "1px solid #e0e0e0" }}

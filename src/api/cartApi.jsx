@@ -28,7 +28,7 @@ export const removeCountedCartApi = async (token, data) => {
   });
 };
 export const submitCartApi = async (token, data) => {
-  console.log("s;dl;sdl;sld;lsd;l");
+  
   return await axios.post("https://ecom-shop-api-ten.vercel.app/api/cart/onSubmit", data, {
     headers: {
       Authorization: `Bearer ${token}`,

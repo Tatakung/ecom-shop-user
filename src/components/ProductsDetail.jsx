@@ -17,41 +17,38 @@ const ProductsDetail = () => {
   const { id } = useParams();
   const token = useMyStore((state) => state.token);
   const user = useMyStore((state) => state.user);
-  const [product, setProduct] = useState({}); // เปลี่ยนเป็น {} เพื่อให้เข้ากับ res.data ที่เป็น object
+  const [product, setProduct] = useState({}); 
   const [count, setCount] = useState(1);
-  const [loading, setLoading] = useState(true); // เพิ่ม state สำหรับ loading
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [addingToCart, setAddingToCart] = useState(false); 
 
   useEffect(() => {
-    // โค้ดเดิมที่คุณต้องการคงไว้
     const fetchProduct = async () => {
-      setLoading(true); // เริ่มโหลด
+      setLoading(true); 
       await getProducts(token, id);
-      setLoading(false); // โหลดเสร็จสิ้น
+      setLoading(false); 
     };
     fetchProduct();
-  }, [token, id]); // เพิ่ม id ใน dependency array
+  }, [token, id]); 
 
   const getProducts = async (token, id) => {
     // โค้ดเดิมที่คุณต้องการคงไว้
     try {
       const res = await listProductdetail(token, id);
       setProduct(res.data);
-      // เพิ่ม logic ปรับ count หากสินค้าหมดหรือมีจำนวนน้อยกว่าที่ตั้งไว้
       if (res.data.quantity === 0) {
         setCount(0);
       } else if (count > res.data.quantity) {
         setCount(res.data.quantity);
       }
     } catch (error) {
-      console.error("Error fetching product details:", error); // เปลี่ยน console.log เป็น console.error
-      toast.error("ไม่สามารถโหลดรายละเอียดสินค้าได้"); // เพิ่ม toast.error
+      console.error("Error fetching product details:", error); 
+      toast.error("ไม่สามารถโหลดรายละเอียดสินค้าได้"); 
     }
   };
 
   const add = () => {
-    // โค้ดเดิมที่คุณต้องการคงไว้, พร้อมเพิ่ม logic ไม่ให้เกินจำนวนสินค้าคงคลัง
     setCount((prevCount) => {
       const newCount = prevCount + 1;
       return product.quantity && newCount > product.quantity
@@ -61,7 +58,6 @@ const ProductsDetail = () => {
   };
 
   const remove = () => {
-    // โค้ดเดิมที่คุณต้องการคงไว้
     setCount((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
   };
 
@@ -69,8 +65,6 @@ const ProductsDetail = () => {
     if (!user) {
       navigate("/login");
     }
-    // เปลี่ยนชื่อ function จาก addToCard เป็น addToCart ให้ตรงตาม convention
-    // เพิ่ม logic ตรวจสอบสินค้าหมด/จำนวนเป็น 0
     if (product.quantity <= 0) {
       toast.error("สินค้าหมด ไม่สามารถหยิบใส่ตะกร้าได้");
       return;
@@ -152,8 +146,7 @@ const ProductsDetail = () => {
               role="status"
               style={{ color: "#333333" }}
             >
-              {" "}
-              {/* สี Spinner เทาเข้ม */}
+             
               <span className="visually-hidden">Loading...</span>
             </div>
             <p className="ms-3 text-muted">กำลังโหลดรายละเอียดสินค้า...</p>
@@ -369,7 +362,7 @@ const ProductsDetail = () => {
                           className="spinner-border spinner-border-sm me-2"
                           role="status"
                           aria-hidden="true"
-                          style={{ color: "#FFFFFF" }} // สี Spinner เป็นสีขาว
+                          style={{ color: "#FFFFFF" }}
                         ></span>
                         กำลังหยิบใส่ตะกร้า...
                       </>

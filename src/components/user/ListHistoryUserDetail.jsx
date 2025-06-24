@@ -7,18 +7,16 @@ import useMyStore from "../../global-state/bigdata";
 import { useNavigate } from "react-router-dom";
 
 const ListHistoryUserDetail = ({ cart }) => {
-  // console.log(cart); // ยังคง console.log เดิมไว้
+
   const user = useMyStore((state) => state.user);
 
   const navigate = useNavigate();
 
   // ฟังก์ชันนำทางไปยังหน้าแจ้งชำระเงิน
   const payments = () => {
-    // Logic เดิม: นำทางไปยัง 'pay' ซึ่งคาดว่าจะถูกจัดการใน Router อีกที
     navigate("pay");
   };
 
-  // ฟังก์ชันช่วยจัดรูปแบบราคาสินค้าให้มีเครื่องหมายคอมม่าและไม่มีทศนิยม
   const formatPrice = (price) => {
     if (price === null || price === undefined) {
       return "0";
@@ -46,7 +44,6 @@ const ListHistoryUserDetail = ({ cart }) => {
   return (
     <div>
       <div className="container">
-        {/* กล่อง Card หลักสำหรับรายละเอียดทั้งหมด */}
         <div
           className="card shadow-sm mb-4"
           style={{
@@ -54,7 +51,6 @@ const ListHistoryUserDetail = ({ cart }) => {
             border: `1px solid ${colors.borderColor}`,
           }}
         >
-          {/* ส่วนหัวของ Card */}
           <div
             className="card-header fw-bold"
             style={{
@@ -65,7 +61,6 @@ const ListHistoryUserDetail = ({ cart }) => {
             ข้อมูลคำสั่งซื้อ
           </div>
 
-          {/* เนื้อหาใน Card */}
           <div className="card-body">
             {/* เลขออเดอร์และปุ่มแจ้งชำระเงิน */}
             <div
@@ -194,9 +189,7 @@ const ListHistoryUserDetail = ({ cart }) => {
               </p>
             )}
 
-            {/* สรุปยอดรวมค่าสินค้า ค่าส่ง และยอดรวมทั้งหมด */}
             <div className="mt-4">
-              {/* รวมค่าสินค้า */}
               <div className="row mb-2">
                 <div
                   className="col-10 text-end fw-semibold"
@@ -208,7 +201,6 @@ const ListHistoryUserDetail = ({ cart }) => {
                   className="col-2 text-end fw-bold"
                   style={{ color: colors.primaryText }}
                 >
-                  {/* Logic การคำนวณจาก cart.cartTotal - 30 คงเดิม */}
                   {formatPrice(cart.cartTotal - 30)} ฿
                 </div>
               </div>

@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const ConfirmOrder = () => {
   const token = useMyStore((state) => state.token);
-  const [cart, setCart] = useState(null); // ใช้ null เพื่อจัดการ loading/empty state
+  const [cart, setCart] = useState(null); 
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(true);
@@ -41,7 +41,7 @@ const ConfirmOrder = () => {
 
   useEffect(() => {
     getCart();
-  }, [token]); // เพิ่ม token ใน dependency array
+  }, [token]); 
 
   const handleConfirmOrder = async () => {
     if (!address.trim()) {
@@ -148,7 +148,6 @@ const ConfirmOrder = () => {
           ยืนยันการสั่งซื้อ
         </h3>
 
-        {/* User Info and Address/Phone Input Section */}
         <div
           className="row p-3 mb-4 rounded shadow-sm"
           style={{ backgroundColor: "#FFFFFF", border: "1px solid #e0e0e0" }}
@@ -200,7 +199,6 @@ const ConfirmOrder = () => {
                   backgroundColor: "#f9f9f9",
                 }}
               />
-              {/* <p className="mt-1" style={{ fontSize: "0.85rem", color: "#777777" }}>รหัสตะกร้า: {cart.id}</p> */}
             </div>
           </div>
         </div>
@@ -262,7 +260,7 @@ const ConfirmOrder = () => {
           </div>
         ))}
 
-        {/* Summary and Confirm Button Section */}
+        
         <div
           className="row mt-4 p-3 rounded shadow-sm"
           style={{ backgroundColor: "#FFFFFF", border: "1px solid #e0e0e0" }}
@@ -322,7 +320,7 @@ const ConfirmOrder = () => {
                     className="spinner-border spinner-border-sm me-2"
                     role="status"
                     aria-hidden="true"
-                    style={{ color: "#FFFFFF" }} // สี Spinner เป็นสีขาว
+                    style={{ color: "#FFFFFF" }} 
                   ></span>
                   กำลังทำรายการ...
                 </>

@@ -1,10 +1,8 @@
 import axios from "axios";
 export const loginApi = async (data) => {
-  // console.log(data);
   return axios.post("https://ecom-shop-api-ten.vercel.app/api/login", data);
 };
 export const registerApi = async (data) => {
-  // console.log(data);
   return axios.post("https://ecom-shop-api-ten.vercel.app/api/register", data);
 };
 export const currentAdmin = async (token) => {

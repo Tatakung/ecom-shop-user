@@ -14,10 +14,10 @@ const SidBar = () => {
   };
 
   const colors = {
-    activeLinkBg: "#e9ecef",        // เทาอ่อน
-    activeLinkText: "#212529",      // ดำเข้ม
-    linkHoverBg: "#f8f9fa",         // เทาอ่อนมาก
-    linkHoverText: "#212529",       // ดำเข้ม
+    activeLinkBg: "#e9ecef",        
+    activeLinkText: "#212529",      
+    linkHoverBg: "#f8f9fa",         
+    linkHoverText: "#212529",       
   };
 
   const Icons = {
@@ -72,7 +72,7 @@ const SidBar = () => {
     <div className="position-fixed h-100" style={{ zIndex: 1030 }}>
       <div
         className="d-flex flex-column flex-shrink-0 p-3 shadow-sm h-100"
-        style={{ width: "250px", borderRight: "1px solid #dee2e6" }} // ใช้สีจาก Bootstrap default
+        style={{ width: "250px", borderRight: "1px solid #dee2e6" }} 
       >
         <Link
           to="/"
@@ -81,7 +81,7 @@ const SidBar = () => {
           <Icons.Shop />
           <span className="fs-5 fw-bold">ร้านค้าออนไลน์</span>
         </Link>
-        <hr className="my-3 border-secondary" /> {/* ใช้ Bootstrap hr class */}
+        <hr className="my-3 border-secondary" /> 
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item mb-2">
             <Link

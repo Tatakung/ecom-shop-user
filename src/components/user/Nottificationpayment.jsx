@@ -20,27 +20,23 @@ const Nottificationpayment = () => {
   const [hor, setHor] = useState("");
   const [minute, setMinute] = useState("");
   const { id } = useParams();
-  const [cart, setCart] = useState([]); // สถานะนี้จะเก็บยอดรวมตะกร้า ตาม Logic เดิมของคุณ
-  // ดึงชื่อผู้ใช้จาก global state เพื่อนำมาแสดง (ตัวอย่าง ถ้ามีใน store)
+  const [cart, setCart] = useState([]); 
   const userName = useMyStore((state) => state.user?.name || "ไม่ระบุ");
   const [addingToCart, setAddingToCart] = useState(false);
-
   // ฟังก์ชันดึงข้อมูลตะกร้าสินค้า
   const getcart = async (token, id) => {
     setLoading(true); // เริ่มโหลด
     try {
-      // console.log('fdlfd;fl') // บรรทัดนี้มาจากโค้ดเดิมของคุณ
       const res = await ListhistoryCartApi(token, id);
-      setCart(res.data.cartTotal); // ตั้งค่า state 'cart' ด้วยยอดรวมตะกร้า
+      setCart(res.data.cartTotal); 
       toast.success(res.data.message); // แสดงข้อความสำเร็จ
     } catch (error) {
       console.log(error);
-      toast.error("ไม่สามารถโหลดรายละเอียดออเดอร์ได้"); // เพิ่มข้อความ error toast
+      toast.error("ไม่สามารถโหลดรายละเอียดออเดอร์ได้"); 
     } finally {
       setLoading(false); // หยุดโหลด
     }
   };
-
   // ฟังก์ชันช่วยจัดรูปแบบราคาสินค้า (ใช้แสดงยอดเงิน)
   const formatPrice = (price) => {
     return price
@@ -77,23 +73,22 @@ const Nottificationpayment = () => {
       console.log(error);
       toast.error(
         error.response?.data?.message || "เกิดข้อผิดพลาดในการแจ้งชำระเงิน"
-      ); // ปรับปรุงข้อความ error toast
+      ); 
     } finally {
-      setAddingToCart(false); // หยุดหยิบใส่ตะกร้า
+      setAddingToCart(false); 
     }
   };
 
-  // Effect สำหรับโหลดข้อมูลเมื่อ component โหลดครั้งแรก
   useEffect(() => {
     const now = new Date();
-    const yyyyMMdd = now.toISOString().split("T")[0]; // กำหนดวันที่เริ่มต้นเป็นวันนี้ (YYYY-MM-DD)
+    const yyyyMMdd = now.toISOString().split("T")[0]; 
     setDate(yyyyMMdd);
-    setHor(now.getHours()); // กำหนดชั่วโมงเริ่มต้น
-    setMinute(now.getMinutes()); // กำหนดนาทีเริ่มต้น
-    getcart(token, id); // เรียก API ดึงข้อมูลตะกร้า
-  }, [token, id]); // เพิ่ม token และ id ใน dependency array
+    setHor(now.getHours()); 
+    setMinute(now.getMinutes()); 
+    getcart(token, id); 
+  }, [token, id]); 
 
-  // แสดง Loading Spinner ถ้าข้อมูลยังโหลดไม่เสร็จ
+  
   if (loading) {
     return (
       <div

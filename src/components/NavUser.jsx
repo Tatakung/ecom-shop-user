@@ -53,7 +53,6 @@ const NavUser = () => {
           to="/"
           style={{ color: colors.brandText }}
         >
-          {/* ตรวจสอบว่ามีไฟล์โลโก้หรือไม่ ถ้ามีให้แสดงรูป ถ้าไม่มีแสดงข้อความ */}
           {logo ? (
             <img
               src={logo}

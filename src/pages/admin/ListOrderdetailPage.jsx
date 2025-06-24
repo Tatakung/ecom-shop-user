@@ -12,7 +12,7 @@ const ListOrderdetailPage = () => {
   const token = useMyStore((state) => state.token);
   const [cart, setCart] = useState(null);
   const [number, setNumber] = useState("");
-
+  const [loadingButton, setLoadingButton] = useState(false);
   const colors = {
     background: "#f2f2f2",
     cardBackground: "#FFFFFF",
@@ -30,7 +30,6 @@ const ListOrderdetailPage = () => {
   const getcart = async (token, id) => {
     try {
       const res = await ListhistoryCartApi(token, id);
-      
       setCart(res.data);
     } catch (error) {
       console.error("Error fetching cart details:", error);
@@ -42,22 +41,18 @@ const ListOrderdetailPage = () => {
     getcart(token, id);
   }, [token, id]);
 
-  
-
   const handleOnsubmit = async (actionType) => {
-   
     try {
       const data = {
         order_id: id,
         numberCode: number,
       };
-      
 
       if (actionType === "confirmShipping" && !number) {
         toast.warn("กรุณาใส่รหัสติดตามพัสดุ!");
         return;
       }
-
+      setLoadingButton(true);
       const res = await updateStatusApi(token, data);
       getcart(token, id);
       let message = "";
@@ -72,6 +67,8 @@ const ListOrderdetailPage = () => {
     } catch (error) {
       console.error("Error updating status:", error);
       toast.error("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
+    } finally {
+      setLoadingButton(false);
     }
   };
 
@@ -98,17 +95,7 @@ const ListOrderdetailPage = () => {
       className="container py-4"
       style={{ backgroundColor: colors.background, minHeight: "100vh" }}
     >
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer />
 
       <div
         className="card shadow-sm mb-4"
@@ -149,7 +136,19 @@ const ListOrderdetailPage = () => {
                   }}
                   onClick={() => handleOnsubmit("confirmPayment")}
                 >
-                  ได้รับการตรวจสอบแล้วว่าชำระเงินแล้ว
+                  {loadingButton ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                        style={{ color: "#FFFFFF" }} // สี Spinner เป็นสีขาว
+                      ></span>
+                      กำลังทำรายการ...
+                    </>
+                  ) : (
+                    <>ได้รับการตรวจสอบแล้วว่าชำระเงินแล้ว</>
+                  )}
                 </button>
               </div>
             )}
@@ -165,7 +164,19 @@ const ListOrderdetailPage = () => {
                   }}
                   onClick={() => handleOnsubmit("prepareOrder")}
                 >
-                  ยืนยันการเตรียมพัสดุ
+                  {loadingButton ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                        style={{ color: "#FFFFFF" }} // สี Spinner เป็นสีขาว
+                      ></span>
+                      กำลังทำรายการ...
+                    </>
+                  ) : (
+                    <>ยืนยันการเตรียมพัสดุ</>
+                  )}
                 </button>
               </div>
             )}
@@ -190,13 +201,26 @@ const ListOrderdetailPage = () => {
                   <button
                     type="button"
                     className="btn btn-secondary"
+                    disabled={loadingButton}
                     style={{
                       fontWeight: "bold",
                       transition: "background-color 0.2s, border-color 0.2s",
                     }}
                     onClick={() => handleOnsubmit("confirmShipping")}
                   >
-                    ยืนยันการจัดส่งสินค้า
+                    {loadingButton ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                          style={{ color: "#FFFFFF" }} // สี Spinner เป็นสีขาว
+                        ></span>
+                        กำลังทำรายการ...
+                      </>
+                    ) : (
+                      <>ยืนยันการจัดส่งสินค้า</>
+                    )}
                   </button>
                 </div>
               </div>

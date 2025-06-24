@@ -19,6 +19,7 @@ const Listproduct = () => {
   const [setype, setSeType] = useState("0");
   const [seel, setSeel] = useState("0");
   const [stock, setStock] = useState("0");
+  const [loading, setLoading] = useState(true);
 
   const colors = {
     background: "#f2f2f2",
@@ -38,8 +39,10 @@ const Listproduct = () => {
   };
   const getProduct = async () => {
     try {
+      setLoading(true);
       const res = await listProduct();
       getProducts(res.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error("เกิดข้อผิดพลาดในการดึงข้อมูลสินค้า");
@@ -57,21 +60,22 @@ const Listproduct = () => {
   }, []);
 
   const onclickf = async () => {
-    
+    setLoading(true);
     const query = await listqueryProduct(setype, seel, stock);
     getProducts(query.data);
+    setLoading(false);
   };
 
   const handleRemove = async (id) => {
     try {
       const remove = await removeProduct(token, id);
-      getProduct(); // รีเฟรชข้อมูลสินค้าหลังจากลบ
+      getProduct();
       toast.success(remove.data.message);
     } catch (error) {
       console.log(error);
       toast.error(
         error.response?.data?.message || "เกิดข้อผิดพลาดในการลบสินค้า"
-      ); // แสดงข้อความ error จาก API หรือข้อความทั่วไป
+      );
     }
   };
 
@@ -81,8 +85,6 @@ const Listproduct = () => {
       style={{ backgroundColor: colors.background, minHeight: "100vh" }}
     >
       <ToastContainer />
-
-      {/* Page Title Card */}
       <div
         className="card shadow-sm mb-4"
         style={{
@@ -99,7 +101,6 @@ const Listproduct = () => {
           </h4>
         </div>
       </div>
-
       <div className="row">
         <div className="col-3">
           <div class="input-group mb-3">
@@ -165,8 +166,6 @@ const Listproduct = () => {
           </button>
         </div>
       </div>
-
-      {/* Product List Table Card */}
       <div
         className="card shadow-sm"
         style={{
@@ -174,168 +173,183 @@ const Listproduct = () => {
           border: `1px solid ${colors.borderColor}`,
         }}
       >
-        <div className="card-body">
-          <div className="table-responsive">
-            <table className="table table-hover mb-0">
-              <thead>
-                <tr>
-                  <th
-                    scope="col"
-                    style={{
-                      backgroundColor: colors.tableHeaderBg,
-                      color: colors.tableHeaderText,
-                      borderBottom: `2px solid ${colors.borderColor}`,
-                    }}
-                  >
-                    รูป
-                  </th>
-                  <th
-                    scope="col"
-                    style={{
-                      backgroundColor: colors.tableHeaderBg,
-                      color: colors.tableHeaderText,
-                      borderBottom: `2px solid ${colors.borderColor}`,
-                    }}
-                  >
-                    รายการชุด
-                  </th>
-                  <th
-                    scope="col"
-                    style={{
-                      backgroundColor: colors.tableHeaderBg,
-                      color: colors.tableHeaderText,
-                      borderBottom: `2px solid ${colors.borderColor}`,
-                    }}
-                  >
-                    ขายได้
-                  </th>
-                  <th
-                    scope="col"
-                    style={{
-                      backgroundColor: colors.tableHeaderBg,
-                      color: colors.tableHeaderText,
-                      borderBottom: `2px solid ${colors.borderColor}`,
-                    }}
-                  >
-                    จำนวนสต๊อก
-                  </th>
-                  <th
-                    scope="col"
-                    style={{
-                      backgroundColor: colors.tableHeaderBg,
-                      color: colors.tableHeaderText,
-                      borderBottom: `2px solid ${colors.borderColor}`,
-                    }}
-                  >
-                    จัดการ
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.length > 0 ? (
-                  products.map((element, index) => (
-                    <tr
-                      key={index}
+        {loading ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "300px" }}
+          >
+            <div
+              className="spinner-border"
+              role="status"
+              style={{ color: "#333333" }}
+            >
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            <p className="ms-3 text-muted">กำลังโหลดรายการชุด...</p>
+          </div>
+        ) : (
+          <div className="card-body">
+            <div className="table-responsive">
+              <table className="table table-hover mb-0">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
                       style={{
-                        borderBottom: `1px solid ${colors.borderColor}`,
+                        backgroundColor: colors.tableHeaderBg,
+                        color: colors.tableHeaderText,
+                        borderBottom: `2px solid ${colors.borderColor}`,
                       }}
                     >
-                      <th scope="row">
-                        <img
-                          src={
-                            element.images?.[0]?.url ||
-                            "https://via.placeholder.com/50x50?text=No+Image"
-                          }
-                          alt={element.category?.name || "product image"}
-                          width="50"
-                          height="50"
-                          style={{
-                            objectFit: "cover",
-                            borderRadius: "4px",
-                            border: `1px solid ${colors.borderColor}`,
-                          }}
-                        />
-                      </th>
-                      <td style={{ color: colors.primaryText }}>
-                        <span>{element.title || "N/A"}</span> <br />
-                        <span>#{element?.category?.name} </span>
-                      </td>
-                      <td style={{ color: colors.primaryText }}>
-                        {" "}
-                        {element.sold }{" "}
-                      </td>
-                      <td style={{ color: colors.primaryText }}>
-                        {" "}
-                        {element.quantity}{" "}
-                      </td>
+                      รูป
+                    </th>
+                    <th
+                      scope="col"
+                      style={{
+                        backgroundColor: colors.tableHeaderBg,
+                        color: colors.tableHeaderText,
+                        borderBottom: `2px solid ${colors.borderColor}`,
+                      }}
+                    >
+                      รายการชุด
+                    </th>
+                    <th
+                      scope="col"
+                      style={{
+                        backgroundColor: colors.tableHeaderBg,
+                        color: colors.tableHeaderText,
+                        borderBottom: `2px solid ${colors.borderColor}`,
+                      }}
+                    >
+                      ขายได้
+                    </th>
+                    <th
+                      scope="col"
+                      style={{
+                        backgroundColor: colors.tableHeaderBg,
+                        color: colors.tableHeaderText,
+                        borderBottom: `2px solid ${colors.borderColor}`,
+                      }}
+                    >
+                      จำนวนสต๊อก
+                    </th>
+                    <th
+                      scope="col"
+                      style={{
+                        backgroundColor: colors.tableHeaderBg,
+                        color: colors.tableHeaderText,
+                        borderBottom: `2px solid ${colors.borderColor}`,
+                      }}
+                    >
+                      จัดการ
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.length > 0 ? (
+                    products.map((element, index) => (
+                      <tr
+                        key={index}
+                        style={{
+                          borderBottom: `1px solid ${colors.borderColor}`,
+                        }}
+                      >
+                        <th scope="row">
+                          <img
+                            src={
+                              element.images?.[0]?.url ||
+                              "https://via.placeholder.com/50x50?text=No+Image"
+                            }
+                            alt={element.category?.name || "product image"}
+                            width="50"
+                            height="50"
+                            style={{
+                              objectFit: "cover",
+                              borderRadius: "4px",
+                              border: `1px solid ${colors.borderColor}`,
+                            }}
+                          />
+                        </th>
+                        <td style={{ color: colors.primaryText }}>
+                          <span>{element.title || "N/A"}</span> <br />
+                          <span>#{element?.category?.name} </span>
+                        </td>
+                        <td style={{ color: colors.primaryText }}>
+                          {" "}
+                          {element.sold}{" "}
+                        </td>
+                        <td style={{ color: colors.primaryText }}>
+                          {" "}
+                          {element.quantity}{" "}
+                        </td>
 
-                      <td>
-                        <Link
-                          to={"/admin/list-product/" + element.id}
-                          className="btn btn-sm me-2"
-                          style={{
-                            backgroundColor: "#A53860", // ✅ ปุ่มแก้ไขเป็นสีเทา
-                            color: colors.headerText,
-                            fontWeight: "bold",
-                            transition:
-                              "background-color 0.2s, border-color 0.2s",
-                          }}
-                        >
-                          <i className="bi bi-pencil-square"></i> แก้ไข
-                        </Link>
-                        <button
-                          className="btn btn-sm"
-                          data-bs-toggle="modal"
-                          data-bs-target={`#removeProductModal${element.id}`}
-                          style={{
-                            backgroundColor: colors.grayButton,
-                            color: colors.headerText,
-                            borderColor: colors.grayButton,
-                            fontWeight: "bold",
-                            transition:
-                              "background-color 0.2s, border-color 0.2s",
-                          }}
-                          onMouseOver={(e) => (
-                            (e.target.style.backgroundColor =
-                              colors.grayButtonHover),
-                            (e.target.style.borderColor =
-                              colors.grayButtonHover)
-                          )}
-                          onMouseOut={(e) => (
-                            (e.target.style.backgroundColor =
-                              colors.grayButton),
-                            (e.target.style.borderColor = colors.grayButton)
-                          )}
-                        >
-                          <i className="bi bi-trash"></i>
-                          {element.isuse ? "ยกเลิกการขาย" : "เปิดการขาย"}
-                        </button>
+                        <td>
+                          <Link
+                            to={"/admin/list-product/" + element.id}
+                            className="btn btn-sm me-2"
+                            style={{
+                              backgroundColor: "#A53860", 
+                              color: colors.headerText,
+                              fontWeight: "bold",
+                              transition:
+                                "background-color 0.2s, border-color 0.2s",
+                            }}
+                          >
+                            <i className="bi bi-pencil-square"></i> แก้ไข
+                          </Link>
+                          <button
+                            className="btn btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target={`#removeProductModal${element.id}`}
+                            style={{
+                              backgroundColor: colors.grayButton,
+                              color: colors.headerText,
+                              borderColor: colors.grayButton,
+                              fontWeight: "bold",
+                              transition:
+                                "background-color 0.2s, border-color 0.2s",
+                            }}
+                            onMouseOver={(e) => (
+                              (e.target.style.backgroundColor =
+                                colors.grayButtonHover),
+                              (e.target.style.borderColor =
+                                colors.grayButtonHover)
+                            )}
+                            onMouseOut={(e) => (
+                              (e.target.style.backgroundColor =
+                                colors.grayButton),
+                              (e.target.style.borderColor = colors.grayButton)
+                            )}
+                          >
+                            <i className="bi bi-trash"></i>
+                            {element.isuse ? "ยกเลิกการขาย" : "เปิดการขาย"}
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="4"
+                        className="text-center text-muted py-4"
+                        style={{ color: colors.secondaryText }}
+                      >
+                        ไม่มีข้อมูลสินค้า
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan="4"
-                      className="text-center text-muted py-4"
-                      style={{ color: colors.secondaryText }}
-                    >
-                      ไม่มีข้อมูลสินค้า
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
-      {/* Remove Product Modals Loop */}
       {products.map((element, index) => (
         <div
-          key={element.id || index} // ใช้ element.id เป็น key เพื่อประสิทธิภาพที่ดีขึ้น
+          key={element.id || index}
           className="modal fade"
-          id={`removeProductModal${element.id}`} // ✅ ใช้ ID ที่สื่อความหมาย
+          id={`removeProductModal${element.id}`}
           tabIndex="-1"
           aria-labelledby={`removeProductModalLabel${element.id}`}
           aria-hidden="true"

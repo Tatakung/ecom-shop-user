@@ -11,14 +11,21 @@ const Bonus = () => {
 
     return () => clearTimeout(timer);
   }, [navigate]);
-
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-      <div className="text-center">
-        <p className="fs-4 fw-bold text-secondary">
-          กำลังโหลด กรุณารอสักครู่!
-        </p>
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ minHeight: "300px" }}
+    >
+      <div
+        className="spinner-border"
+        role="status"
+        style={{ color: "#333333" }}
+      >
+        {" "}
+        {/* สี Spinner เทาเข้ม */}
+        <span className="visually-hidden">Loading...</span>
       </div>
+      <p className="ms-3 text-muted">กำลังโหลด...</p>
     </div>
   );
 };
