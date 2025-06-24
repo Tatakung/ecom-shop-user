@@ -11,10 +11,8 @@
   - แบบฟอร์มแจ้งชำระเงิน
   - Dashboard ผู้ดูแลระบบพร้อมกราฟ  
   - ระบบ Login/Register พร้อม JWT Auth
-  - 
+  - รองรับการออกใบเสร็จรับเงินเป็นไฟล์ pdf
 - 🌐 **เยี่ยมชมเว็บไซต์ตอนนี้:** [https://ecom-shop-user.vercel.app/](https://ecom-shop-user.vercel.app/)
 - 🌐 **github fontend:** [https://github.com/Tatakung/ecom-shop-user/tree/main](https://github.com/Tatakung/ecom-shop-user/tree/main)
 - 🌐 **github backend:** [https://github.com/Tatakung/ecom-shop-api/tree/main](https://github.com/Tatakung/ecom-shop-api/tree/main)
-
 ---
-
